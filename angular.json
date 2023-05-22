@@ -56,7 +56,13 @@
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -97,8 +103,21 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "ring-of-fire-ang15:build:production",
+            "firebaseProject": "ring-of-fire-ang15",
+            "firebaseHostingSite": "ring-of-fire-ang15"
+          }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "5d97cad6-4a7d-4050-b208-4a1866cccd06"
   }
 }

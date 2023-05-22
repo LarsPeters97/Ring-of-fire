@@ -1,0 +1,49 @@
+.start-screen {
+  background-color: black;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100%;
+  background-image: url("./../../assets/img/start-img.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 65%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+
+  h1 {
+    color: rgb(255, 215, 0);
+    position: absolute;
+    top: 8vh;
+    font-size: 130px;
+    text-align: center;
+    margin: 0;
+    line-height: 1;
+    text-shadow: 3px 0px 7px rgb(255, 215, 0, 0.8),
+      -3px 0px 7px rgb(255, 215, 0, 0.8), 0px 4px 7px rgb(255, 215, 0, 0.8);
+  }
+
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background-color: black;
+    opacity: 0.67;
+  }
+
+  .play-btn {
+    position: absolute;
+    bottom: 8vh;
+    cursor: pointer;
+    background-color: #bc0000;
+    padding: 20px 50px 20px 50px;
+    border: 5px solid rgb(255, 215, 0);
+    box-shadow: 5px -4px 14px rgb(255, 215, 0), -5px 4px 12px rgb(255, 215, 0);
+    border-radius: 16px;
+    font-size: 48px;
+    color: white;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
