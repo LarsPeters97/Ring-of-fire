@@ -1,4 +1,10 @@
-import { Component, OnChanges, Input } from '@angular/core';
+import { Component, OnChanges, Input, OnInit } from '@angular/core';
+import { gameData } from '../game-date.service';
+import { IsGameOverService } from '../is-game-over.service';
+import { Game } from 'src/models/game';
+import { Router } from '@angular/router';
+import { doc, setDoc } from '@angular/fire/firestore';
+import { getFirestore } from 'firebase/firestore';
 
 @Component({
   selector: 'app-game-info',
@@ -56,16 +62,46 @@ export class GameInfoComponent implements OnChanges {
         'Make a rule. Everyone needs to drink when he breaks the rule.',
     },
   ];
-
+  db = getFirestore();
   title: string = '';
   description: string = '';
   @Input() card: any;
+  amountPlayers!: number;
+  players: Array<string> = [];
+  isGameOver: boolean = false;
 
-  ngOnChanges() {
+  constructor(
+    private gameData: gameData,
+    private isGameOverService: IsGameOverService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    this.gameData.amountPlayers.subscribe((amountPlayers) => {
+      this.amountPlayers = amountPlayers;
+    });
+    this.gameData.players.subscribe((players: Array<string>) => {
+      this.players = players;
+    });
+    this.isGameOverService.isGameOver.subscribe((isGameOver) => {
+      this.isGameOver = isGameOver;
+    });
+  }
+
+  ngOnChanges(): void {
     if (this.card) {
       let cardNumber = +this.card.split('_')[1];
       this.title = this.cardAction[cardNumber - 1].title;
       this.description = this.cardAction[cardNumber - 1].description;
     }
+  } 
+
+  restartGame() {
+    let oldGameId = this.router.url.split('/')[2];
+    let newGame = new Game();
+    newGame.players = this.players;
+    let docRef = doc(this.db, 'games', oldGameId);
+    let newGameData = newGame.toJson();
+    setDoc(docRef, newGameData);
   }
 }

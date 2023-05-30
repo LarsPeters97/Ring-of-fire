@@ -1,14 +1,39 @@
 <mat-card class="card-info">
   <mat-card-header>
-    <mat-card-title class="game-info-title">
+    <mat-card-title
+      *ngIf="this.amountPlayers > 1 && !this.isGameOver"
+      class="game-info-title"
+    >
       {{ card ? title : "Please take a card." }}
-    </mat-card-title></mat-card-header
-  >
-  <mat-card-content
+    </mat-card-title>
+    <mat-card-title
+      *ngIf="this.amountPlayers < 2 && !this.isGameOver"
+      class="game-info-title"
+    >
+      Add a player
+    </mat-card-title>
+    <mat-card-title *ngIf="this.isGameOver" class="game-info-title">
+      Game over !
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content *ngIf="this.amountPlayers > 1 && !this.isGameOver"
     >{{
       card
         ? description
         : "Please click on the card stack to select the next card."
     }}
   </mat-card-content>
+  <mat-card-content *ngIf="this.amountPlayers < 2 && !this.isGameOver"
+    >At least two players must be added for the game to start. For this you can
+    click on the blue plus button.
+  </mat-card-content>
+  <mat-card-content *ngIf="this.isGameOver"
+    >The game is over ! All cards have been drawn. To restart the game click the
+    button at the bottom right.
+  </mat-card-content>
+  <mat-card-actions align="end" *ngIf="this.isGameOver">
+    <button mat-raised-button color="primary" (click)="restartGame()">
+      Restart
+    </button>
+  </mat-card-actions>
 </mat-card>

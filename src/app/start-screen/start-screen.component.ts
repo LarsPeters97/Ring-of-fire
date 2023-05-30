@@ -13,14 +13,12 @@ export class StartScreenComponent {
   firestore: Firestore = inject(Firestore);
   db = getFirestore();
   gamesCollection = collection(this.firestore, 'games');
+  game!: Game;
   constructor(private router: Router) {}
 
   newGame() {
-    let game = new Game();
-    addDoc(collection(this.db, 'games'), {
-      game: game.toJson(),
-    }).then((gameInfo: any) => {
-      console.log(gameInfo.id);
+    this.game = new Game();
+    addDoc(this.gamesCollection, this.game.toJson()).then((gameInfo: any) => {
       this.router.navigateByUrl(`/game/${gameInfo.id}`);
     });
   }

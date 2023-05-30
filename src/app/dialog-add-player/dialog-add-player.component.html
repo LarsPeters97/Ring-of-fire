@@ -5,15 +5,31 @@
     <mat-label>Name</mat-label>
     <input matInput [(ngModel)]="name" />
   </mat-form-field>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button
-    mat-button
-    [disabled]="name.length == 0"
-    [mat-dialog-close]="name"
-    cdkFocusInitial
-  >
-    Ok
-  </button>
+  <div class="profile">
+    <p>Please choose an avatar for the game.</p>
+    <label *ngFor="let profilePicture of profilePictures; let i = index">
+      <!-- <input
+        type="radio"
+        name="profile"
+        [value]="profile"
+        formControlName="profile"
+      /> -->
+      <img
+        (click)="selectImage(profilePicture)"
+        [class.selected]="profilePicture == selectedImage"
+        src="assets/img/avatars/avatar-{{ profilePicture }}"
+      />
+    </label>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">No Thanks</button>
+    <button
+      mat-button
+      [disabled]="name.length < 3 || !selectedImage"
+      [mat-dialog-close]="{ name: name, selectedImage: selectedImage }"
+      cdkFocusInitial
+    >
+      Ok
+    </button>
+  </div>
 </div>
