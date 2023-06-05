@@ -14,7 +14,6 @@ export class Game {
       this.stack.push('diamonds_' + i);
       this.stack.push('hearts_' + i);
     }
-
     this.shuffleArray(this.stack);
   }
 

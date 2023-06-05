@@ -1,12 +1,12 @@
-<h1 mat-dialog-title>Add new player</h1>
+<h1 mat-dialog-title>Edit the player</h1>
 <div mat-dialog-content>
-  <p>Please enter the name of a player.</p>
+  <p>Change the player name.</p>
   <mat-form-field appearance="fill">
     <mat-label>Name</mat-label>
     <input maxlength="25" matInput [(ngModel)]="name" />
   </mat-form-field>
   <div class="profile">
-    <p>Please choose an avatar for the game.</p>
+    <p>Change the avatar for the game.</p>
     <label *ngFor="let profilePicture of profilePictures; let i = index">
       <img
         (click)="selectImage(profilePicture)"
@@ -17,6 +17,14 @@
   </div>
   <div mat-dialog-actions>
     <button mat-button (click)="onNoClick()">No Thanks</button>
+    <button
+      mat-button
+      color="warn"
+      [mat-dialog-close]="'Delete'"
+      cdkFocusInitial
+    >
+      Delete Player
+    </button>
     <button
       mat-button
       [disabled]="name.length < 3 || !selectedImage"

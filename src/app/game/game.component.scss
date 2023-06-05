@@ -14,9 +14,57 @@
   right: 350px;
   img {
     position: absolute;
-    object-fit: contain;
-    width: 180px;
-    height: 225px;
+  }
+
+  @media (max-width: 800px) {
+    right: 325px;
+  }
+
+  @media (max-width: 720px) {
+    right: 250px;
+    bottom: 100px;
+  }
+
+  @media (max-width: 550px) {
+    right: 175px;
+  }
+
+  @media (max-width: 400px) {
+    right: 135px;
+  }
+
+  @media (max-width: 720px) and (max-height: 450px) {
+    bottom: 72px;
+  }
+}
+
+.face-down-cards {
+  height: 225px;
+  width: 155px;
+
+  @media (max-width: 720px) {
+    width: 127px;
+    height: 185px;
+  }
+
+  @media (max-width: 560px) {
+    width: 99px;
+    height: 145px;
+  }
+
+  @media (max-width: 400px) {
+    width: 90px;
+    height: 134px;
+  }
+
+  @media (max-height: 450px) {
+    height: 175px;
+    width: 120px;
+  }
+
+  @media (max-width: 720px) and (max-height: 450px) {
+    height: 120px;
+    width: 82px;
   }
 }
 
@@ -25,12 +73,32 @@
   transition: all 125ms ease-in-out;
   &:hover {
     transform: scale(1.01) translateY(-20px);
+
+    @media (max-width: 720px) and (max-height: 450px) {
+      transform: scale(1.01) translateY(-6px);
+    }
   }
 }
 
 .pick-card {
-  animation: pick-card-animation 1s ease-in-out;
+  animation: pick-card-animation 1000ms ease-in-out;
   transform: scale(1) translateX(300px);
+  object-fit: contain;
+  height: 225px;
+
+  @media (max-width: 720px) {
+    height: 185px;
+  }
+
+  @media (max-width: 560px) {
+    height: 145px;
+    animation: pick-card-animation-mobile 1000ms ease-in-out;
+    transform: scale(1) translateX(175px);
+  }
+
+  @media (max-width: 720px) and (max-height: 450px) {
+    height: 120px;
+  }
 }
 
 @keyframes pick-card-animation {
@@ -45,24 +113,62 @@
   }
 }
 
+@keyframes pick-card-animation-mobile {
+  0% {
+    transform: scale(1) translateX(25px);
+  }
+  50% {
+    transform: scale(1.2) translateX(25px);
+  }
+  100% {
+    transform: scale(1) translateX(175px);
+  }
+}
+
 .played-card {
   transform: translateX(300px);
   left: 0px;
   object-fit: contain;
-  width: 180px;
   height: 225px;
+
+  @media (max-width: 720px) {
+    height: 185px;
+  }
+
+  @media (max-width: 560px) {
+    height: 145px;
+    transform: translateX(175px);
+  }
+
+  @media (max-width: 560px) {
+    height: 135px;
+  }
+
+  @media (max-height: 450px) {
+    height: 175px;
+  }
+
+  @media (max-width: 720px) and (max-height: 450px) {
+    height: 120px;
+  }
 }
 
 .player-position {
-  position: absolute;
-  right: 0;
-  z-index: 1;
+  cursor: pointer;
 }
 
 .btn-add {
   position: absolute;
   bottom: 32px;
   right: 32px;
+
+  @media (max-width: 720px) {
+    bottom: 180px;
+  }
+
+  @media (max-width: 720px) and (max-height: 450px) {
+    bottom: 150px;
+  }
 }
 
 .pin-bottom {
@@ -70,4 +176,78 @@
   left: 32px;
   right: 100px;
   bottom: 32px;
+
+  @media (max-width: 720px) {
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+.scroll-container {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  margin-top: 16px;
+  height: 77vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 12px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: rgb(55, 55, 55);
+    border-radius: 12px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+
+  @media (max-height: 720px) {
+    height: 70vh;
+  }
+
+  @media (max-height: 600px) {
+    height: 60vh;
+  }
+
+  @media (max-height: 425px) {
+    height: 50vh;
+    margin-top: 8px;
+  }
+}
+
+.scroll-container-mobile {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: 0;
+  display: flex;
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+
+app-player-mobile {
+  margin-left: 8px;
+}
+
+app-player {
+  margin-bottom: 16px;
+}
+
+app-player,
+app-player-mobile {
+  &:hover {
+    filter: brightness(1.2);
+  }
 }

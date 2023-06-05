@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Game } from 'src/models/game';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
 import {
   Firestore,
@@ -15,6 +15,7 @@ import { getFirestore } from 'firebase/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { gameData } from '../game-date.service';
 import { IsGameOverService } from '../is-game-over.service';
+import { DialogEditPlayerComponent } from '../dialog-edit-player/dialog-edit-player.component';
 
 @Component({
   selector: 'app-game',
@@ -72,24 +73,32 @@ export class GameComponent {
   }
 
   takeCard() {
-    if (this.game.players.length > 1) {
+    if (this.atLeastTwoPlayers()) {
       if (!this.game.pickCardAnimation) {
         this.game.currentCard = this.game.stack.pop()!;
         this.checkGameOver();
         this.game.pickCardAnimation = true;
-        this.game.currentPlayer++;
-        this.game.currentPlayer =
-          this.game.currentPlayer % this.game.players.length;
+        this.changeCurrentPlayerFocus();
         this.saveGame();
-        setTimeout(() => {
-          this.game.playedCard.push(this.game.currentCard);
-          this.game.pickCardAnimation = false;
-          this.saveGame();
-        }, 1000);
+        setTimeout(() => this.drawnCardBecomesAPlayedCard(), 1000);
       }
-    } else {
-      this.openDialog();
-    }
+    } else this.openDialog();
+  }
+
+  atLeastTwoPlayers() {
+    return this.game.players.length > 1;
+  }
+
+  drawnCardBecomesAPlayedCard() {
+    this.game.playedCard.push(this.game.currentCard);
+    this.game.pickCardAnimation = false;
+    this.saveGame();
+  }
+
+  changeCurrentPlayerFocus() {
+    this.game.currentPlayer++;
+    this.game.currentPlayer =
+      this.game.currentPlayer % this.game.players.length;
   }
 
   checkGameOver() {
@@ -103,7 +112,6 @@ export class GameComponent {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogAddPlayerComponent);
-
     dialogRef.afterClosed().subscribe((playerData: any) => {
       if (playerData) {
         this.game.players.push(playerData);
@@ -116,5 +124,28 @@ export class GameComponent {
     let docRef = doc(this.gamesCollection, this.gameId);
     let gameData = this.game.toJson();
     setDoc(docRef, gameData);
+  }
+
+  editPlayer(playerNumber: number) {
+    const dialogRef = this.dialog.open(DialogEditPlayerComponent, {
+      data: {
+        name: this.game.players[playerNumber].name,
+        selectedImage: this.game.players[playerNumber].selectedImage,
+      },
+    });
+    this.actionsAfterDialogGetsClosed(dialogRef, playerNumber);
+  }
+
+  actionsAfterDialogGetsClosed(
+    dialogRef: MatDialogRef<DialogEditPlayerComponent, any>,
+    playerNumber: number
+  ) {
+    dialogRef.afterClosed().subscribe((playerData: any) => {
+      if (playerData === 'Delete') {
+        this.game.players.splice(playerNumber, 1);
+        this.changeCurrentPlayerFocus();
+      } else if (playerData) this.game.players[playerNumber] = playerData;
+      this.saveGame();
+    });
   }
 }

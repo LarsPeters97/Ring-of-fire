@@ -8,26 +8,14 @@
   width: 300px;
   flex-wrap: wrap;
 
-  @media (max-width: 400px) {
-    width: auto;
-  }
-
   label {
     margin: 0px 12px 0px 12px;
-
-    @media (max-width: 400px) {
-      margin: 0px 6px 0px 6px;
-    }
   }
 
   img {
     width: 64px;
     object-fit: contain;
     cursor: pointer;
-
-    @media (max-width: 400px) {
-      width: 54px;
-    }
   }
 
   .selected {

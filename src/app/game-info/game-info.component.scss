@@ -1,3 +1,12 @@
+mat-card {
+  @media (max-width: 720px) {
+    min-height: 150px;
+  }
+
+  @media (max-width: 720px) and (max-height: 450px) {
+    min-height: auto;
+  }
+}
 .mat-mdc-card-header {
   display: flex;
   padding: 4px 16px 6px 16px;

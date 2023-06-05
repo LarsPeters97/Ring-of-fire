@@ -77,15 +77,15 @@ export class GameInfoComponent implements OnChanges {
   ) {}
 
   ngOnInit(): void {
-    this.gameData.amountPlayers.subscribe((amountPlayers) => {
-      this.amountPlayers = amountPlayers;
-    });
-    this.gameData.players.subscribe((players: Array<string>) => {
-      this.players = players;
-    });
-    this.isGameOverService.isGameOver.subscribe((isGameOver) => {
-      this.isGameOver = isGameOver;
-    });
+    this.gameData.amountPlayers.subscribe(
+      (amountPlayers) => (this.amountPlayers = amountPlayers)
+    );
+    this.gameData.players.subscribe(
+      (players: Array<string>) => (this.players = players)
+    );
+    this.isGameOverService.isGameOver.subscribe(
+      (isGameOver) => (this.isGameOver = isGameOver)
+    );
   }
 
   ngOnChanges(): void {
@@ -94,7 +94,7 @@ export class GameInfoComponent implements OnChanges {
       this.title = this.cardAction[cardNumber - 1].title;
       this.description = this.cardAction[cardNumber - 1].description;
     }
-  } 
+  }
 
   restartGame() {
     let oldGameId = this.router.url.split('/')[2];

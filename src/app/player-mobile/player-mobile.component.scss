@@ -1,0 +1,42 @@
+.player {
+  display: flex;
+  background-color: rgba(50, 50, 50, 0.8);
+  width: 40px;
+  border-bottom-left-radius: 50px;
+  border-bottom-right-radius: 50px;
+  color: white;
+  flex-direction: column;
+  align-items: center;
+  height: 150px;
+  justify-content: flex-end;
+
+  @media (max-width: 720px) and (max-height: 450px) {
+    height: 100px;
+  }
+
+  img {
+    width: 40px;
+    object-fit: contain;
+    border-radius: 100%;
+  }
+
+  span {
+    font-size: 16px;
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    margin-bottom: 3px;
+
+    @media (max-width: 720px) and (max-height: 450px) {
+      font-size: 12px;
+      margin-bottom: 1px;
+    }
+  }
+}
+
+.player-active {
+  background-color: orange;
+  color: black;
+}

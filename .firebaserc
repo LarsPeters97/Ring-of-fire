@@ -1,13 +1,4 @@
 {
-  "targets": {
-    "ring-of-fire-ang15": {
-      "hosting": {
-        "ring-of-fire-ang15": [
-          "ring-of-fire-ang15"
-        ]
-      }
-    }
-  },
   "projects": {
     "default": "ring-of-fire-ang15"
   }

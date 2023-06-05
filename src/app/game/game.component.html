@@ -1,15 +1,31 @@
-<app-player
-  *ngFor="let player of game.players; let i = index"
-  class="player-position"
-  [ngStyle]="{ 'top.px': 100 + i * 80 }"
-  [playerActive]="i == game.currentPlayer"
-  [playerData]="player[i]"
-></app-player>
+<div class="scroll-container">
+  <app-player
+    *ngFor="let player of game.players; let i = index"
+    class="player-position hide-desktop"
+    [ngStyle]="{ 'top.px': 20 + i * 70 }"
+    [playerActive]="i == game.currentPlayer"
+    [playerData]="player"
+    (click)="editPlayer(i)"
+    >{{ player }}</app-player
+  >
+</div>
+
+<div class="scroll-container-mobile">
+  <app-player-mobile
+    class="hide-mobile"
+    *ngFor="let player of game.players; let i = index"
+    [playerActive]="i == game.currentPlayer"
+    [playerData]="player"
+    (click)="editPlayer(i)"
+    >{{ player }}</app-player-mobile
+  >
+</div>
 
 <div class="field">
   <div class="card-stack">
     <div *ngIf="this.game.stack.length >= 5">
       <img
+        class="face-down-cards"
         *ngFor="let c of [0, 1, 2, 3]; let i = index"
         [ngStyle]="{ 'left.px': i * 5 }"
         src="assets/img/cards/card_cover.png"
@@ -18,6 +34,7 @@
     <div *ngIf="this.game.stack.length < 5 && this.game.stack.length > 1">
       <ng-container *ngFor="let card of this.game.stack; let i = index">
         <img
+          class="face-down-cards"
           *ngIf="i < this.game.stack.length - 1"
           [ngStyle]="{ 'left.px': i * 5 }"
           src="assets/img/cards/card_cover.png"
@@ -28,7 +45,7 @@
     <img
       *ngIf="this.game.stack.length > 0"
       (click)="takeCard()"
-      class="top-card"
+      class="top-card face-down-cards"
       style="left: 25px"
       src="assets/img/cards/card_cover.png"
     />
