@@ -7,7 +7,7 @@
   border-bottom-left-radius: 50px;
   color: white;
   overflow: hidden;
-
+  height: 100%;
   @media (max-width: 900px) {
     width: 200px;
   }
@@ -23,6 +23,10 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    height: 100%;
+    display: flex;
+    align-items: center;
+
     @media (max-width: 900px) {
       font-size: 20px;
       margin-left: 8px;
